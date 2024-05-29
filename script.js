@@ -32,7 +32,7 @@ function createTable() {
     for (let i = 0; i < numRows; i++) {
         tableHTML += '<tr>';
         for (let j = 0; j < numCols; j++) {
-            tableHTML += `<td align="center"><img id=${imageIndex} onClick="revealCard(this)" width="125" height="125"></td>`;
+            tableHTML += `<td align="center"><img id=${imageIndex} onClick="revealCard()" width="125" height="125"></td>`;
             imageIndex++;
         }
         tableHTML += '</tr>';
@@ -65,17 +65,40 @@ function startNewGame() {
     clickCounter.innerHTML = `<b>${pairClickCounter}</b>`;
 }
 
-function revealCard(clickedImage) {
+function revealCard() {
     clickCounter++;
 
     if (clickCounter <= 2) {
+        let clickedImage = window.event.srcElement;
+
         if (clickedImage.getAttribute("src") !== backImage) {
             clickCounter--;
             return;
         }
 
-        let imgPath = "img/" + imageArray[clickedImage.id];
-        clickedImage.setAttribute("src", imgPath);
+        let borderOfImageWidth = 0;
+        let interval = setInterval(function() {
+            if (clickedImage.width > borderOfImageWidth) {
+                clickedImage.width -= 1;
+                console.log(clickedImage.width);
+            } else {
+                clearInterval(interval); // Останавливаем интервал после завершения анимации
+                let imgPath = "img/" + imageArray[clickedImage.id];
+                clickedImage.setAttribute("src", imgPath);
+
+                // Увеличиваем изображение до исходного размера
+                let initialWidth = maxImgWidth;
+                let increaseInterval = setInterval(function() {
+                    if (clickedImage.width < initialWidth) {
+                        clickedImage.width += 1;
+                    } else {
+                        clearInterval(increaseInterval); // Останавливаем интервал после достижения исходного размера
+                    }
+                }, 10);
+
+                clickedImage.width = 0; // Устанавливаем ширину обратно на 0 для следующей анимации увеличения
+            }
+        }, 10); // Интервал в миллисекундах для контроля скорости анимации
 
         if (clickCounter > 1) {
             if (imageArray[clickedImage.id] === firstCardImage) {
@@ -93,6 +116,7 @@ function revealCard(clickedImage) {
     }
 }
 
+
 function removeImage() {
     firstCardElement.style.display = "none";
     secondCardElement.style.display = "none";
@@ -102,14 +126,11 @@ function removeImage() {
 }
 
 function hideImage() {
-    if (!secondCardElement) return;
-
-    setTimeout(() => {
-        firstCardElement.setAttribute("src", backImage);
-        secondCardElement.setAttribute("src", backImage);
-        firstCardElement = null;
-        secondCardElement = null;
-        clickCounter = 0;
-        clickCounter.innerHTML = `<b>${pairClickCounter}</b>`;
-    }, 500); // Задержка перед сменой изображения, чтобы показать анимацию уменьшения
+    if (!secondCardElement) return; // Добавляем проверку на существование secondCardElement
+    firstCardElement.setAttribute("src", backImage);
+    secondCardElement.setAttribute("src", backImage);
+    firstCardElement = null;
+    secondCardElement = null; // Обнуляем secondCardElement
+    clickCounter = 0;
+    clickCounter.innerHTML = `<b>${pairClickCounter}</b>`;
 }
