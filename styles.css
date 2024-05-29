@@ -38,7 +38,6 @@ body {
 
 .card {
     perspective: 1000px;
-    transition: transform 0.5s;
 }
 
 .card img {
@@ -53,29 +52,9 @@ body {
 
 @keyframes flip {
     0% {
-        transform: rotateY(0deg);
-    }
-    50% {
-        transform: rotateY(90deg);
+        transform: scaleX(1);
     }
     100% {
-        transform: rotateY(0deg);
+        transform: scaleX(0);
     }
 }
-
-.flip-close {
-    animation: flip-close 0.5s;
-}
-
-@keyframes flip-close {
-    0% {
-        transform: rotateY(0deg);
-    }
-    50% {
-        transform: rotateY(-90deg); /* Изменяем направление вращения */
-    }
-    100% {
-        transform: rotateY(0deg);
-    }
-}
-

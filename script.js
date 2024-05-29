@@ -32,7 +32,7 @@ function createTable() {
     for (let i = 0; i < numRows; i++) {
         tableHTML += '<tr>';
         for (let j = 0; j < numCols; j++) {
-            tableHTML += `<td align="center"><img id=${imageIndex} onClick="revealCard()" width="125" height="125"></td>`;
+            tableHTML += `<td align="center"><img id=${imageIndex} onClick="revealCard(this)" width="125" height="125"></td>`;
             imageIndex++;
         }
         tableHTML += '</tr>';
@@ -65,12 +65,10 @@ function startNewGame() {
     clickCounter.innerHTML = `<b>${pairClickCounter}</b>`;
 }
 
-function revealCard() {
+function revealCard(clickedImage) {
     clickCounter++;
 
     if (clickCounter <= 2) {
-        let clickedImage = window.event.srcElement;
-
         if (clickedImage.getAttribute("src") !== backImage) {
             clickCounter--;
             return;
@@ -78,7 +76,6 @@ function revealCard() {
 
         let imgPath = "img/" + imageArray[clickedImage.id];
         clickedImage.setAttribute("src", imgPath);
-        clickedImage.classList.add("flip"); // Добавляем класс для анимации переворота
 
         if (clickCounter > 1) {
             if (imageArray[clickedImage.id] === firstCardImage) {
@@ -107,20 +104,12 @@ function removeImage() {
 function hideImage() {
     if (!secondCardElement) return;
 
-    firstCardElement.classList.remove("flip");
-    secondCardElement.classList.remove("flip");
-
     setTimeout(() => {
-        firstCardElement.classList.add("flip-close"); // Добавляем класс для анимации закрытия
-        secondCardElement.classList.add("flip-close");
-
-        setTimeout(() => {
-            firstCardElement.setAttribute("src", backImage);
-            secondCardElement.setAttribute("src", backImage);
-            firstCardElement = null;
-            secondCardElement = null;
-            clickCounter = 0;
-            clickCounter.innerHTML = `<b>${pairClickCounter}</b>`;
-        }, 500); // Ждем завершения анимации перед закрытием картинки
-    }, 500); // Ждем завершения анимации перед добавлением класса для закрытия
+        firstCardElement.setAttribute("src", backImage);
+        secondCardElement.setAttribute("src", backImage);
+        firstCardElement = null;
+        secondCardElement = null;
+        clickCounter = 0;
+        clickCounter.innerHTML = `<b>${pairClickCounter}</b>`;
+    }, 500); // Задержка перед сменой изображения, чтобы показать анимацию уменьшения
 }
