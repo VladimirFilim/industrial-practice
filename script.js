@@ -73,6 +73,7 @@ function revealCard() {
 
         if (clickedImage.getAttribute("src") !== backImage) {
             clickCounter--;
+            return; // Добавляем return, чтобы функция прекратила выполнение
         }
 
         let imgPath = "img/" + imageArray[clickedImage.id];
@@ -80,8 +81,10 @@ function revealCard() {
 
         if (clickCounter > 1) {
             if (imageArray[clickedImage.id] === firstCardImage) {
+                secondCardElement = clickedImage; // Присваиваем secondCardElement
                 setTimeout(removeImage, 1000);
             } else {
+                secondCardElement = clickedImage; // Присваиваем secondCardElement
                 setTimeout(hideImage, 1000);
             }
         } else {
@@ -101,9 +104,11 @@ function removeImage() {
 }
 
 function hideImage() {
+    if (!secondCardElement) return; // Добавляем проверку на существование secondCardElement
     firstCardElement.setAttribute("src", backImage);
     secondCardElement.setAttribute("src", backImage);
     firstCardElement = null;
+    secondCardElement = null; // Обнуляем secondCardElement
     clickCounter = 0;
-    clickCounter.innerHTML = `<b>${pairClickCounter}</b>`
+    clickCounter.innerHTML = `<b>${pairClickCounter}</b>`;
 }
