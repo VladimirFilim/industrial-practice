@@ -107,15 +107,20 @@ function removeImage() {
 function hideImage() {
     if (!secondCardElement) return;
 
-    firstCardElement.classList.remove("flip"); // Убираем класс анимации для закрытия
+    firstCardElement.classList.remove("flip");
     secondCardElement.classList.remove("flip");
 
     setTimeout(() => {
-        firstCardElement.setAttribute("src", backImage);
-        secondCardElement.setAttribute("src", backImage);
-        firstCardElement = null;
-        secondCardElement = null;
-        clickCounter = 0;
-        clickCounter.innerHTML = `<b>${pairClickCounter}</b>`;
-    }, 500); // Ждем завершения анимации перед закрытием картинки
+        firstCardElement.classList.add("flip-close"); // Добавляем класс для анимации закрытия
+        secondCardElement.classList.add("flip-close");
+
+        setTimeout(() => {
+            firstCardElement.setAttribute("src", backImage);
+            secondCardElement.setAttribute("src", backImage);
+            firstCardElement = null;
+            secondCardElement = null;
+            clickCounter = 0;
+            clickCounter.innerHTML = `<b>${pairClickCounter}</b>`;
+        }, 500); // Ждем завершения анимации перед закрытием картинки
+    }, 500); // Ждем завершения анимации перед добавлением класса для закрытия
 }
