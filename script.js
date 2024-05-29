@@ -73,18 +73,19 @@ function revealCard() {
 
         if (clickedImage.getAttribute("src") !== backImage) {
             clickCounter--;
-            return; // Добавляем return, чтобы функция прекратила выполнение
+            return;
         }
 
         let imgPath = "img/" + imageArray[clickedImage.id];
         clickedImage.setAttribute("src", imgPath);
+        clickedImage.classList.add("flip"); // Добавляем класс для анимации переворота
 
         if (clickCounter > 1) {
             if (imageArray[clickedImage.id] === firstCardImage) {
-                secondCardElement = clickedImage; // Присваиваем secondCardElement
+                secondCardElement = clickedImage;
                 setTimeout(removeImage, 1000);
             } else {
-                secondCardElement = clickedImage; // Присваиваем secondCardElement
+                secondCardElement = clickedImage;
                 setTimeout(hideImage, 1000);
             }
         } else {
@@ -104,11 +105,17 @@ function removeImage() {
 }
 
 function hideImage() {
-    if (!secondCardElement) return; // Добавляем проверку на существование secondCardElement
-    firstCardElement.setAttribute("src", backImage);
-    secondCardElement.setAttribute("src", backImage);
-    firstCardElement = null;
-    secondCardElement = null; // Обнуляем secondCardElement
-    clickCounter = 0;
-    clickCounter.innerHTML = `<b>${pairClickCounter}</b>`;
+    if (!secondCardElement) return;
+
+    firstCardElement.classList.remove("flip"); // Убираем класс анимации для закрытия
+    secondCardElement.classList.remove("flip");
+
+    setTimeout(() => {
+        firstCardElement.setAttribute("src", backImage);
+        secondCardElement.setAttribute("src", backImage);
+        firstCardElement = null;
+        secondCardElement = null;
+        clickCounter = 0;
+        clickCounter.innerHTML = `<b>${pairClickCounter}</b>`;
+    }, 500); // Ждем завершения анимации перед закрытием картинки
 }
