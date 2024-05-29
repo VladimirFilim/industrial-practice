@@ -13,7 +13,7 @@ let maxImgWidth = 125;
 let maxImgHeight = 125;
 let minImgWidth = 0;
 let resizeStep = 5;
-let transitionRate = 10;
+let transitionRate = 1;
 
 let backImage = 'img/back.jpg';
 let imageArray = [
@@ -94,11 +94,11 @@ function revealCard() {
                     } else {
                         clearInterval(increaseInterval); // Останавливаем интервал после достижения исходного размера
                     }
-                }, 10);
+                }, transitionRate);
 
                 clickedImage.width = 0; // Устанавливаем ширину обратно на 0 для следующей анимации увеличения
             }
-        }, 10); // Интервал в миллисекундах для контроля скорости анимации
+        }, transitionRate); // Интервал в миллисекундах для контроля скорости анимации
 
         if (clickCounter > 1) {
             if (imageArray[clickedImage.id] === firstCardImage) {
@@ -126,11 +126,49 @@ function removeImage() {
 }
 
 function hideImage() {
-    if (!secondCardElement) return; // Добавляем проверку на существование secondCardElement
-    firstCardElement.setAttribute("src", backImage);
-    secondCardElement.setAttribute("src", backImage);
-    firstCardElement = null;
-    secondCardElement = null; // Обнуляем secondCardElement
-    clickCounter = 0;
-    clickCounter.innerHTML = `<b>${pairClickCounter}</b>`;
+    if (!secondCardElement) return;
+
+    // Уменьшаем ширину первого элемента
+    let initialWidth = maxImgWidth;
+    let decreaseInterval = setInterval(function() {
+        if (firstCardElement.width > 0) {
+            firstCardElement.width -= 1;
+        } else {
+            clearInterval(decreaseInterval); // Останавливаем интервал после завершения анимации
+            firstCardElement.setAttribute("src", backImage);
+
+            // Запускаем анимацию увеличения ширины
+            let increaseWidthInterval = setInterval(function() {
+                if (firstCardElement.width < maxImgWidth) {
+                    firstCardElement.width += 1;
+                } else {
+                    clearInterval(increaseWidthInterval); // Останавливаем интервал после достижения исходной ширины
+                }
+            }, transitionRate);
+        }
+    }, transitionRate);
+
+    // Уменьшаем ширину второго элемента
+    let secondInitialWidth = maxImgWidth;
+    let secondDecreaseInterval = setInterval(function() {
+        if (secondCardElement.width > 0) {
+            secondCardElement.width -= 1;
+        } else {
+            clearInterval(secondDecreaseInterval); // Останавливаем интервал после завершения анимации
+            secondCardElement.setAttribute("src", backImage);
+
+            // Запускаем анимацию увеличения ширины
+            let secondIncreaseWidthInterval = setInterval(function() {
+                if (secondCardElement.width < maxImgWidth) {
+                    secondCardElement.width += 1;
+                } else {
+                    clearInterval(secondIncreaseWidthInterval); // Останавливаем интервал после достижения исходной ширины
+                    firstCardElement = null;
+                    secondCardElement = null;
+                    clickCounter = 0;
+                    clickCounter.innerHTML = `<b>${pairClickCounter}</b>`;
+                }
+            }, transitionRate);
+        }
+    }, transitionRate);
 }
