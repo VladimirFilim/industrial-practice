@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game</title>
+    <style>
+        td {
+            height: 125px;
+            width: 125px;
+            text-align: center;
+            border-spacing: 0px;
+        }
+
+        table {
+            text-align: center;
+            border-spacing: 0px;
+        }
+    </style>
+</head>
+<body>
+
+<input id="startButton" class="button" type="button" value="New Game" onClick="startNewGame()">
+<p>
+<table id='gameTable'></table>
+</p>
+<p>Clicks: <span id="clickCounter"></span></p>
+
+<script src="script.js"></script>
+
+</body>
+</html>
