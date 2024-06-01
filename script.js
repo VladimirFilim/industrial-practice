@@ -134,8 +134,8 @@ function hideImage() {
     let decreaseWidth1 = true;
     let decreaseWidth2 = true;
 
-    // Запускаем анимацию уменьшения и увеличения ширины
-    let animationInterval = setInterval(function() {
+    // Запускаем анимацию уменьшения и увеличения ширины для первой карточки
+    let animationInterval1 = setInterval(function() {
         if (decreaseWidth1) {
             // Уменьшаем ширину первой карточки
             if (firstCardElement.width > 0) {
@@ -152,18 +152,15 @@ function hideImage() {
                 firstCardElement.width += resizeStep;
             } else {
                 // По достижении максимальной ширины завершаем анимацию для первой карточки
-                clearInterval(animationInterval);
+                clearInterval(animationInterval1);
                 // Сбрасываем состояние первой карточки
                 firstCardElement = null;
-                // Сбрасываем состояние второй карточки
-                secondCardElement = null;
-                // Сбрасываем счетчик кликов
-                clickCounter = 0;
-                // Обновляем счетчик пар кликов
-                clickCounter.innerHTML = `<b>${pairClickCounter}</b>`;
             }
         }
+    }, transitionRate);
 
+    // Запускаем анимацию уменьшения и увеличения ширины для второй карточки
+    let animationInterval2 = setInterval(function() {
         if (decreaseWidth2) {
             // Уменьшаем ширину второй карточки
             if (secondCardElement.width > 0) {
@@ -180,9 +177,14 @@ function hideImage() {
                 secondCardElement.width += resizeStep;
             } else {
                 // По достижении максимальной ширины завершаем анимацию для второй карточки
-                clearInterval(animationInterval);
+                clearInterval(animationInterval2);
+                // Сбрасываем состояние второй карточки
+                secondCardElement = null;
+                // Сбрасываем счетчик кликов
+                clickCounter = 0;
+                // Обновляем счетчик пар кликов
+                clickCounter.innerHTML = `<b>${pairClickCounter}</b>`;
             }
         }
     }, transitionRate);
 }
-
