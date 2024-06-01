@@ -9,14 +9,14 @@ let pairClickCounter = 0;
 let tableElement = document.getElementById('gameTable');
 let images = [];
 let remainingCards = numRows * numCols;
-
+let theme = "default";
 let maxImgWidth = 125;
 let maxImgHeight = 125;
 let minImgWidth = 0;
 let resizeStep = 5;
 let transitionRate = 2;
 
-let backImage = 'img/default/back.jpg';
+let backImage = `img/${theme}/back.jpg`;
 let imageArray = [
     "01", "02", "03", "04",
     "05", "06", "07", "08",
@@ -74,26 +74,26 @@ window.onload = createTable;
 function startNewGame() {
     clickCounter = 0;
     pairClickCounter = 0;
-    attemptCounter = 0; // Сбрасываем счетчик попыток
+    attemptCounter = 0;
     document.getElementById("attemptCounter").textContent = attemptCounter;
 
-    resetTimer(); // Сброс таймера
-    startTimer(); // Запуск таймера
+    resetTimer();
+    startTimer();
 
-    let randomImageArray = imageArray.slice(); // Создаем копию массива картинок
-    randomImageArray.sort(() => Math.random() - 0.5); // Перемешиваем элементы в случайном порядке
-
-    // Выбираем только нужное количество картинок для игры
+    let randomImageArray = imageArray.slice();
+    randomImageArray.sort(() => Math.random() - 0.5);
     randomImageArray = randomImageArray.slice(0, numRows * numCols);
 
     for (let i = 0; i < numRows * numCols; i++) {
-        let imgPath = "img/default/" + randomImageArray[i] + ".jpg";
-        images[i].setAttribute("src", backImage);
+        let imgPath = `img/${theme}/${randomImageArray[i]}.jpg`;
+        images[i].setAttribute("src", imgPath);
         images[i].style.display = "inline";
     }
 
     clickCounter.innerHTML = `<b>${pairClickCounter}</b>`;
 }
+
+
 
 function revealCard() {
     clickCounter++;
@@ -247,4 +247,9 @@ function generateNewImageArray() {
 function clearTable() {
     tableHTML = ""; // Очистить содержимое таблицы
     tableElement.innerHTML = ""; // Очистить элемент таблицы
+}
+
+function changeTheme(newTheme) {
+    theme = newTheme;
+    startNewGame();
 }
