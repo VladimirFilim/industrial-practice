@@ -27,6 +27,28 @@ let imageArray = [
     "image7.jpg", "image8.jpg"
 ];
 
+let attemptCounter = 0;
+let timerElement = document.getElementById("timer");
+let timer = 0;
+let timerInterval;
+
+function startTimer() {
+    timerInterval = setInterval(function() {
+        timer++;
+        timerElement.textContent = timer;
+    }, 1000);
+}
+
+function stopTimer() {
+    clearInterval(timerInterval);
+}
+
+function resetTimer() {
+    clearInterval(timerInterval);
+    timer = 0;
+    timerElement.textContent = timer;
+}
+
 function createTable() {
     let imageIndex = 0;
     for (let i = 0; i < numRows; i++) {
@@ -49,6 +71,11 @@ window.onload = createTable;
 function startNewGame() {
     clickCounter = 0;
     pairClickCounter = 0;
+    attemptCounter = 0; // Сбрасываем счетчик попыток
+    document.getElementById("attemptCounter").textContent = attemptCounter;
+
+    resetTimer(); // Сброс таймера
+    startTimer(); // Запуск таймера
 
     for (let i = 0; i < imageArray.length; i++) {
         let randomIndex = Math.floor(Math.random() * imageArray.length);
@@ -80,7 +107,6 @@ function revealCard() {
         let interval = setInterval(function() {
             if (clickedImage.width > borderOfImageWidth) {
                 clickedImage.width -= 1;
-                console.log(clickedImage.width);
             } else {
                 clearInterval(interval); // Останавливаем интервал после завершения анимации
                 let imgPath = "img/" + imageArray[clickedImage.id];
@@ -110,6 +136,7 @@ function revealCard() {
             }
         } else {
             pairClickCounter++;
+            attemptCounter++;
             firstCardImage = imageArray[clickedImage.id];
             firstCardElement = clickedImage;
         }
@@ -123,6 +150,7 @@ function removeImage() {
     firstCardElement = null;
     clickCounter = 0;
     clickCounter.innerHTML = `<b>${pairClickCounter}</b>`;
+    updateAttemptCounter();
 }
 
 function hideImage() {
@@ -176,4 +204,9 @@ function hideImage() {
             }
         }, transitionRate);
     }
+    updateAttemptCounter();
+}
+
+function updateAttemptCounter() {
+    document.getElementById("attemptCounter").textContent = attemptCounter;
 }
