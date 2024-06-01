@@ -28,6 +28,7 @@ let attemptCounter = 0;
 let timerElement = document.getElementById("timer");
 let timer = 0;
 let timerInterval;
+let currentLevelElement = document.getElementById("currentLevel");
 
 function startTimer() {
     timerInterval = setInterval(function() {
@@ -218,16 +219,28 @@ function updateAttemptCounter() {
 }
 
 function startNewLevel() {
-    // Увеличиваем количество строк и столбцов на 1
-    numRows++;
-    numCols++;
+    numRows++; // Увеличить количество строк
+    numCols++; // Увеличить количество столбцов
+    currentLevelElement.textContent = `Текущий уровень: ${numRows}x${numCols}`;
+    imageArray = generateNewImageArray(); // Создать новый список изображений
+    remainingCards = numRows * numCols; // Обновить количество оставшихся карт
+    clearTable(); // Очистить предыдущую таблицу
+    createTable(); // Создать новую таблицу с обновленными размерами
+    startNewGame(); // Начать новую игру
+}
 
-    // Обновляем надпись о текущем уровне
-    document.getElementById("currentLevel").textContent = `Current Level: ${numRows}x${numCols}`;
+function generateNewImageArray() {
+    let newImageArray = [];
+    // Генерируем новый список изображений для нового уровня
+    // Например, здесь вы можете использовать другие имена файлов или добавить новые изображения
+    for (let i = 1; i <= numRows * numCols / 2; i++) {
+        newImageArray.push(i.toString().padStart(2, "0"));
+    }
+    // Дублируем каждое изображение, чтобы создать пары
+    return newImageArray.concat(newImageArray);
+}
 
-    // Генерируем новую таблицу
-    createTable();
-
-    // Начинаем новую игру
-    startNewGame();
+function clearTable() {
+    tableHTML = ""; // Очистить содержимое таблицы
+    tableElement.innerHTML = ""; // Очистить элемент таблицы
 }
