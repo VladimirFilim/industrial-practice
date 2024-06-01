@@ -8,6 +8,7 @@ let secondCardElement;
 let pairClickCounter = 0;
 let tableElement = document.getElementById('gameTable');
 let images = [];
+let remainingCards = numRows * numCols;
 
 let maxImgWidth = 125;
 let maxImgHeight = 125;
@@ -151,6 +152,15 @@ function removeImage() {
     clickCounter = 0;
     clickCounter.innerHTML = `<b>${pairClickCounter}</b>`;
     updateAttemptCounter();
+    remainingCards -= 2;
+    if (remainingCards === 0) {
+        endGame();
+    }
+}
+
+function endGame() {
+    stopTimer(); // Останавливаем таймер
+    alert(`Game Over! Total Attempts: ${attemptCounter}. Total Time: ${timer} seconds.`);
 }
 
 function hideImage() {
