@@ -1,5 +1,6 @@
 body {
-    background-color: #f0f0f0;
+    background-color: #2980b9; /* Цвет фона в случае невозможности загрузки градиента */
+    background-image: linear-gradient(to bottom right, #3498db, #2980b9); /* Градиентный фон */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,27 +14,32 @@ body {
 }
 
 .button {
-    background-color: #4CAF50; /* Зеленый */
+    background-color: #2ecc71; /* Зеленый цвет */
     border: none;
     color: white;
-    padding: 15px 32px;
+    padding: 10px 60px; /* Увеличиваем отступы */
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
+    font-size: 18px; /* Увеличиваем размер шрифта */
+    margin: 0 5px 5px 5px; /* Уменьшаем внешние отступы снизу */
     cursor: pointer;
     border-radius: 8px;
+    transition: background-color 0.3s; /* Добавляем плавный переход при наведении */
 }
 
 .button:hover {
-    background-color: #45a049;
+    background-color: #27ae60; /* Зеленый цвет при наведении */
 }
 
-#clickCounter {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
+#clickCounter, #currentLevel {
+    margin: 5px 0; /* Уменьшаем расстояние между полями */
+    font-size: 20px; /* Увеличиваем размер шрифта для полей */
+    color: white; /* Цвет текста */
 }
 
-
+#timer {
+    margin: 5px 0; /* Уменьшаем расстояние между полями */
+    font-size: 20px; /* Увеличиваем размер шрифта для поля */
+    color: black; /* Черный цвет текста */
+}
