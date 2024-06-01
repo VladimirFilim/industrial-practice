@@ -16,16 +16,12 @@ let minImgWidth = 0;
 let resizeStep = 5;
 let transitionRate = 2;
 
-let backImage = 'img/back.jpg';
+let backImage = 'img/default/back.jpg';
 let imageArray = [
-    "image1.jpg", "image2.jpg",
-    "image3.jpg", "image4.jpg",
-    "image5.jpg", "image6.jpg",
-    "image7.jpg", "image8.jpg",
-    "image1.jpg", "image2.jpg",
-    "image3.jpg", "image4.jpg",
-    "image5.jpg", "image6.jpg",
-    "image7.jpg", "image8.jpg"
+    "01", "02", "03", "04",
+    "05", "06", "07", "08",
+    "01", "02", "03", "04",
+    "05", "06", "07", "08"
 ];
 
 let attemptCounter = 0;
@@ -78,14 +74,14 @@ function startNewGame() {
     resetTimer(); // Сброс таймера
     startTimer(); // Запуск таймера
 
-    for (let i = 0; i < imageArray.length; i++) {
-        let randomIndex = Math.floor(Math.random() * imageArray.length);
-        let temp = imageArray[i];
-        imageArray[i] = imageArray[randomIndex];
-        imageArray[randomIndex] = temp;
-    }
+    let randomImageArray = imageArray.slice(); // Создаем копию массива картинок
+    randomImageArray.sort(() => Math.random() - 0.5); // Перемешиваем элементы в случайном порядке
+
+    // Выбираем только нужное количество картинок для игры
+    randomImageArray = randomImageArray.slice(0, numRows * numCols);
 
     for (let i = 0; i < numRows * numCols; i++) {
+        let imgPath = "img/default/" + randomImageArray[i] + ".jpg";
         images[i].setAttribute("src", backImage);
         images[i].style.display = "inline";
     }
@@ -110,7 +106,7 @@ function revealCard() {
                 clickedImage.width -= 1;
             } else {
                 clearInterval(interval); // Останавливаем интервал после завершения анимации
-                let imgPath = "img/" + imageArray[clickedImage.id];
+                let imgPath = "img/default/" + imageArray[clickedImage.id] + ".jpg";
                 clickedImage.setAttribute("src", imgPath);
 
                 // Увеличиваем изображение до исходного размера
