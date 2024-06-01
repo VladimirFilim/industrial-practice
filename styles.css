@@ -43,3 +43,14 @@ body {
     font-size: 20px; /* Увеличиваем размер шрифта для поля */
     color: black; /* Черный цвет текста */
 }
+
+.digit0 { color: #FF5733; }
+.digit1 { color: #C70039; }
+.digit2 { color: #FFC300; }
+.digit3 { color: #DAF7A6; }
+.digit4 { color: #8C14FC; }
+.digit5 { color: #1A7BE8; }
+.digit6 { color: #FF5733; }
+.digit7 { color: #C70039; }
+.digit8 { color: #FFC300; }
+.digit9 { color: #DAF7A6; }

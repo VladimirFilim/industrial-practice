@@ -33,7 +33,12 @@ let currentLevelElement = document.getElementById("currentLevel");
 function startTimer() {
     timerInterval = setInterval(function() {
         timer++;
-        timerElement.textContent = timer;
+        let timerString = timer.toString();
+        let coloredTimer = '';
+        for (let i = 0; i < timerString.length; i++) {
+            coloredTimer += `<span class="digit${timerString[i]}">${timerString[i]}</span>`;
+        }
+        timerElement.innerHTML = coloredTimer;
     }, 1000);
 }
 
