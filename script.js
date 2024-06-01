@@ -216,3 +216,18 @@ function hideImage() {
 function updateAttemptCounter() {
     document.getElementById("attemptCounter").textContent = attemptCounter;
 }
+
+function startNewLevel() {
+    // Увеличиваем количество строк и столбцов на 1
+    numRows++;
+    numCols++;
+
+    // Обновляем надпись о текущем уровне
+    document.getElementById("currentLevel").textContent = `Current Level: ${numRows}x${numCols}`;
+
+    // Генерируем новую таблицу
+    createTable();
+
+    // Начинаем новую игру
+    startNewGame();
+}

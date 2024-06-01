@@ -12,10 +12,12 @@
     <h1>Memory Game</h1>
     <input id="startButton" class="button" type="button" value="New Game" onClick="startNewGame()">
     <p>
-    <table id='gameTable'></table>
+        <input id="nextLevelButton" class="button" type="button" value="Next Level" onClick="startNewLevel()" style="display: none;">
     </p>
     <p>Attempts: <span id="attemptCounter">0</span></p>
     <p>Time: <span id="timer">0</span> seconds</p>
+    <p id="currentLevel">Current Level: 4x4</p>
+    <table id='gameTable'></table>
 </div>
 
 <script src="script.js"></script>
