@@ -128,63 +128,52 @@ function removeImage() {
 function hideImage() {
     if (!firstCardElement || !secondCardElement) return;
 
-    // Устанавливаем начальные значения для уменьшения ширины
     let initialWidth1 = maxImgWidth;
     let initialWidth2 = maxImgWidth;
-    let decreaseWidth1 = true;
-    let decreaseWidth2 = true;
 
-    // Запускаем анимацию уменьшения и увеличения ширины для первой карточки
-    let animationInterval1 = setInterval(function() {
-        if (decreaseWidth1) {
-            // Уменьшаем ширину первой карточки
-            if (firstCardElement.width > 0) {
-                firstCardElement.width -= resizeStep;
-            } else {
-                // По достижении минимальной ширины меняем направление анимации
-                decreaseWidth1 = false;
-                // Устанавливаем новый путь для первой карточки
-                firstCardElement.setAttribute("src", backImage);
-            }
-        } else {
+    // Уменьшаем ширину карточек
+    let animationInterval = setInterval(function() {
+        // Уменьшаем ширину первой карточки
+        if (firstCardElement.width > 0) {
+            firstCardElement.width -= resizeStep;
+        }
+        // Уменьшаем ширину второй карточки
+        if (secondCardElement.width > 0) {
+            secondCardElement.width -= resizeStep;
+        }
+
+        // Если карточки достигли минимальной ширины
+        if (firstCardElement.width <= 0 && secondCardElement.width <= 0) {
+            clearInterval(animationInterval); // Останавливаем анимацию
+
+            // Меняем изображение на рубашку
+            firstCardElement.setAttribute("src", backImage);
+            secondCardElement.setAttribute("src", backImage);
+
+            // Запускаем анимацию увеличения ширины карточек
+            animateIncrease();
+        }
+    }, transitionRate);
+
+    function animateIncrease() {
+        let increaseInterval = setInterval(function() {
             // Увеличиваем ширину первой карточки
-            if (firstCardElement.width < maxImgWidth) {
+            if (firstCardElement.width < initialWidth1) {
                 firstCardElement.width += resizeStep;
-            } else {
-                // По достижении максимальной ширины завершаем анимацию для первой карточки
-                clearInterval(animationInterval1);
-                // Сбрасываем состояние первой карточки
-                firstCardElement = null;
             }
-        }
-    }, transitionRate);
-
-    // Запускаем анимацию уменьшения и увеличения ширины для второй карточки
-    let animationInterval2 = setInterval(function() {
-        if (decreaseWidth2) {
-            // Уменьшаем ширину второй карточки
-            if (secondCardElement.width > 0) {
-                secondCardElement.width -= resizeStep;
-            } else {
-                // По достижении минимальной ширины меняем направление анимации
-                decreaseWidth2 = false;
-                // Устанавливаем новый путь для второй карточки
-                secondCardElement.setAttribute("src", backImage);
-            }
-        } else {
             // Увеличиваем ширину второй карточки
-            if (secondCardElement.width < maxImgWidth) {
+            if (secondCardElement.width < initialWidth2) {
                 secondCardElement.width += resizeStep;
-            } else {
-                // По достижении максимальной ширины завершаем анимацию для второй карточки
-                clearInterval(animationInterval2);
-                // Сбрасываем состояние второй карточки
-                secondCardElement = null;
-                // Сбрасываем счетчик кликов
-                clickCounter = 0;
-                // Обновляем счетчик пар кликов
-                clickCounter.innerHTML = `<b>${pairClickCounter}</b>`;
             }
-        }
-    }, transitionRate);
+
+            // Если карточки достигли исходной ширины
+            if (firstCardElement.width >= initialWidth1 && secondCardElement.width >= initialWidth2) {
+                clearInterval(increaseInterval); // Останавливаем анимацию
+                firstCardElement = null; // Сбрасываем состояние первой карточки
+                secondCardElement = null; // Сбрасываем состояние второй карточки
+                clickCounter = 0; // Сбрасываем счетчик кликов
+                clickCounter.innerHTML = `<b>${pairClickCounter}</b>`; // Обновляем счетчик пар кликов
+            }
+        }, transitionRate);
+    }
 }
