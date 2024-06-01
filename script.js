@@ -57,7 +57,7 @@ function createTable() {
     for (let i = 0; i < numRows; i++) {
         tableHTML += '<tr>';
         for (let j = 0; j < numCols; j++) {
-            tableHTML += `<td align="center" style="width: 125px;"><img id=${imageIndex} onClick="revealCard()" width="125" height="125"></td>`;
+            tableHTML += `<td align="center" style="width: 125px;"><img id=${imageIndex} src="${backImage}" onClick="revealCard()" width="125" height="125"></td>`; // Установить изображение рубашки
             imageIndex++;
         }
         tableHTML += '</tr>';
@@ -251,5 +251,6 @@ function clearTable() {
 
 function changeTheme(newTheme) {
     theme = newTheme;
+    backImage = `img/${theme}/back.jpg`;
     startNewGame();
 }
