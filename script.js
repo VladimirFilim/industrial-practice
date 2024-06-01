@@ -90,6 +90,11 @@ function startNewGame() {
         images[i].style.display = "inline";
     }
 
+    // Установить изображение рубашки для всех карточек
+    for (let i = 0; i < numRows * numCols; i++) {
+        images[i].setAttribute("src", backImage);
+    }
+
     clickCounter.innerHTML = `<b>${pairClickCounter}</b>`;
 }
 
