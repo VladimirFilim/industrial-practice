@@ -219,7 +219,6 @@ function updateAttemptCounter() {
 }
 
 function startNewLevel() {
-    numRows++; // Увеличить количество строк
     numCols++; // Увеличить количество столбцов
     currentLevelElement.textContent = `Текущий уровень: ${numRows}x${numCols}`;
     imageArray = generateNewImageArray(); // Создать новый список изображений
