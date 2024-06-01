@@ -54,7 +54,7 @@ function createTable() {
     for (let i = 0; i < numRows; i++) {
         tableHTML += '<tr>';
         for (let j = 0; j < numCols; j++) {
-            tableHTML += `<td align="center"><img id=${imageIndex} onClick="revealCard()" width="125" height="125"></td>`;
+            tableHTML += `<td align="center" style="width: 125px;"><img id=${imageIndex} onClick="revealCard()" width="125" height="125"></td>`;
             imageIndex++;
         }
         tableHTML += '</tr>';
