@@ -117,7 +117,7 @@ function revealCard() {
                 clickedImage.width -= 1;
             } else {
                 clearInterval(interval); // Останавливаем интервал после завершения анимации
-                let imgPath = "img/default/" + imageArray[clickedImage.id] + ".jpg";
+                let imgPath = `img/${theme}/` + imageArray[clickedImage.id] + ".jpg";
                 clickedImage.setAttribute("src", imgPath);
 
                 // Увеличиваем изображение до исходного размера
